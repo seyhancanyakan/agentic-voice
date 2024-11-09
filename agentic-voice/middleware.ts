@@ -20,21 +20,15 @@ const corsOptions: {
 };
 
 /**
- * Middleware function that handles CORS configuration for API routes.
- *
- * This middleware function is responsible for setting the appropriate CORS headers
- * on the response, based on the configured CORS options. It checks the origin of
- * the request and sets the `Access-Control-Allow-Origin` header accordingly. It
- * also sets the other CORS-related headers, such as `Access-Control-Allow-Credentials`,
- * `Access-Control-Allow-Methods`, `Access-Control-Allow-Headers`, and
- * `Access-Control-Expose-Headers`.
- *
- * The middleware function is configured to be applied to all API routes, as defined
- * by the `config` object at the end of the file.
+ * Middleware function that handles CORS configuration and CrossOrigin Isolation for API routes.
  */
 export function middleware(request: NextRequest) {
   // Response
   const response = NextResponse.next();
+
+  // CrossOrigin Isolation header'ları
+  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin')
+  response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp')
 
   // Allowed origins check
   const origin = request.headers.get("origin") ?? "";
